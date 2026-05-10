@@ -1,3 +1,4 @@
+<img src="https://cdn.modrinth.com/data/k2GpuqyR/ef4c9f6fc4b46fe51fd3c9e4b834c01843ba151c_96.webp" width="128"></img>
 # Instamine
 Deepslate and endstone have always been a major annoyance, same tools, same enchants, just slower for no good reason. Instamine fixes that by adjusting their hardness values to match stone. This also implies that with the ***Efficiency V & Haste II*** combo they instamine just like stone.
 
