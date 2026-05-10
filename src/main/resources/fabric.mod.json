@@ -1,9 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "instamine",
-  "version": "${version}",
+  "version": "1.2.1",
   "name": "Instamine",
-  "description": "Makes deepslate and end stone instamine just like stone with Efficiency V & Haste II.",
+  "icon": "assets/instamine.png",
+  "description": "A mod made to deal with harder blocks a lot easier.",
   "authors": ["m9rgen"],
   "license": "MIT",
   "environment": "*",

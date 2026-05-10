@@ -25,26 +25,12 @@ public class Instamine implements ModInitializer {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final List<String> DEFAULTS = List.of(
         "minecraft:deepslate",
-        "minecraft:cobbled_deepslate",
-        "minecraft:polished_deepslate",
-        "minecraft:deepslate_bricks",
-        "minecraft:cracked_deepslate_bricks",
-        "minecraft:deepslate_tiles",
-        "minecraft:cracked_deepslate_tiles",
-        "minecraft:chiseled_deepslate",
-        "minecraft:deepslate_coal_ore",
-        "minecraft:deepslate_iron_ore",
-        "minecraft:deepslate_gold_ore",
-        "minecraft:deepslate_redstone_ore",
-        "minecraft:deepslate_emerald_ore",
-        "minecraft:deepslate_lapis_ore",
-        "minecraft:deepslate_diamond_ore",
-        "minecraft:deepslate_copper_ore",
         "minecraft:end_stone",
-        "minecraft:end_stone_bricks"
+        "minecraft:cobblestone"
     );
 
     public static List<String> blocks = DEFAULTS;
+    public static float hardness = 1.5f;
 
     @Override
     public void onInitialize() {
@@ -60,6 +46,7 @@ public class Instamine implements ModInitializer {
                 String json = Files.readString(configFile);
                 Config config = GSON.fromJson(json, Config.class);
                 blocks = config.blocks != null ? config.blocks : DEFAULTS;
+                hardness = config.hardness > 0 ? config.hardness : 1.5f;
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to read config, using defaults", e);
                 blocks = DEFAULTS;
@@ -68,7 +55,7 @@ public class Instamine implements ModInitializer {
             blocks = DEFAULTS;
             try {
                 Files.createDirectories(configDir);
-                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS)));
+                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS, 1.5f)));
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to write default config", e);
             }
@@ -79,7 +66,7 @@ public class Instamine implements ModInitializer {
     public static void saveConfig(Path configDir, List<String> newBlocks) {
     Path configFile = configDir.resolve("instamine.json");
     try {
-        Files.writeString(configFile, GSON.toJson(new Config(newBlocks)));
+        Files.writeString(configFile, GSON.toJson(new Config(newBlocks, hardness)));
         blocks = newBlocks;
         applyConfig();
     } catch (IOException e) {
@@ -98,5 +85,5 @@ public class Instamine implements ModInitializer {
             BuiltInRegistries.BLOCK.get(loc).ifPresent(h -> BLOCK_SET.add(h.value()));
         }
     }
-    private record Config(List<String> blocks) {}
+    private record Config(List<String> blocks, float hardness) {}
 }
