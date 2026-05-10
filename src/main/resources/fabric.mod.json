@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "instamine",
+  "version": "${version}",
+  "name": "Instamine",
+  "description": "Makes deepslate and end stone instamine just like stone with Efficiency V & Haste II.",
+  "authors": ["m9rgen"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.instamine.Instamine"
+    ],
+    "client": [
+      "com.instamine.InstamineClient"
+    ],
+    "modmenu": [
+      "com.instamine.InstamineClient"
+    ]
+  },
+  "mixins": [
+    "instamine.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "fabric-api": "*",
+    "minecraft": "26.1.x",
+    "cloth-config": "*",
+    "modmenu": "*"
+  }
+}
