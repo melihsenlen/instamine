@@ -1,5 +1,5 @@
 # Instamine
-Deepslate takes twice as long to mine as stone for a quite obvious reason, however this mod simply does not care. The hardness value of deepslate and endstone variants have been adjusted to match those of stone, which directly implies the ultimate purpose of this mod; With **Efficiency V** & **Haste II**, these blocks will instamine just like how regular stone does.
+Deepslate and endstone have always been a major annoyance, same tools, same enchants, just slower for no good reason. Instamine fixes that by adjusting their hardness values to match stone. This also implies that with the ***Efficiency V & Haste II*** combo they instamine just like stone.
 
 ## Config
 Defaults:
