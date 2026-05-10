@@ -19,17 +19,17 @@ Server-side setup should work for all players regardless of their client. It is 
 - Mod Menu
 
 ## Setup
-1. Download original release:
-    - The latest release can be downloaded from the official <a href="https://modrinth.com/mod/instamine">Modrinth</a> page.
+- Download original release:
+    1. The latest release can be downloaded from the official <a href="https://modrinth.com/mod/instamine">Modrinth</a> page.
 
-    - Place the <code>.jar</code> in your <code>mods</code> directory as always, install the dependencies seperately and you're good to go.
+    2. Place the <code>.jar</code> in your <code>mods</code> directory as always, install the dependencies seperately and you're good to go.
 
-2. Build from source (requires Java 25 and Gradle 9.4.0.):
-    - ```bash
-      .\gradlew.bat build
-      ```
+- Build from source (requires Java 25 and Gradle 9.4.0.):
+    1. ```bash
+       .\gradlew.bat build
+       ```
 
-    - The <code>.jar</code> will be in <code>build/libs/</code>
+    2. The <code>.jar</code> will be in <code>build/libs/</code>
 
 
 
