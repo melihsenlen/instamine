@@ -1,39 +1,55 @@
 <img src="src\main\resources\assets\instamine.png"></img>
 # Instamine
-Deepslate and endstone have always been a major annoyance, same tools, same enchants, just slower for no good reason. Instamine fixes that by adjusting their hardness values to match the hardness value of regular stone. This also implies that with the ***Efficiency V & Haste II*** combo, you can instamine these blocks just like regular stone.
+Mining deepslate has always felt inconsistent. Same tools, same enchants, slower mining speed for no meaningful gameplay reason.
 
-## Config
-Defaults and their previous hardness values:
-- Deepslate (3.0)
-- Endstone (3.0)
-- Cobblestone (2.0)
+Instamine fixes that by reducing the hardness of selected blocks to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
 
-Stone is originally (1.5) hardness, so that's what you will get out of the box with this mod. In addition, you can also configure this target hardness value as of version 1.2.1.
-
-The list of affected blocks can be configured with the ModMenu mod. Config file will be located in <code>config/instamine.json</code> after its generation.
-
-## Server
-Server-side setup should work for all players regardless of their client. It is however recommended to have it on the client too, especially if you want the mining animation to be consistent.
+## Features
+- Makes **deepslate**, **endstone**, and **cobblestone** instamineable out of the box
+- Fully customizable block list through the **Mod Menu** mod or the config file
+- Configurable target hardness for those who have other things in mind
+- Works server-side without requiring clients to install the mod
 
 ## Dependencies
 - Minecraft 26.1.x
-- Fabric loader
-- Fabric API
-- Cloth Config
-- Mod Menu
+- <a href="https://modrinth.com/mod/fabric-api">Fabric API</a>
+- <a href="https://modrinth.com/mod/cloth-config">Cloth Config API</a>
+- <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
 
-## Setup
-- Download original release:
-    1. The latest release can be downloaded from the official <a href="https://modrinth.com/mod/instamine">Modrinth</a> page.
+## Configuration
 
-    2. Place the <code>.jar</code> in your <code>mods</code> directory as always, install the dependencies seperately and you're good to go.
+#### Default Changes
+| Block | Vanilla Hardness | Target Hardness |
+|---|---:|---:|
+| Deepslate | 3.0 | 1.5 |
+| Endstone | 3.0 | 1.5 |
+| Cobblestone | 2.0 | 1.5 |
 
-- Build from source (requires Java 25 and Gradle 9.4.0.):
-    1. ```bash
-       .\gradlew.bat build
-       ```
+`1.5` is the vanilla hardness of stone, and yes cobblestone is originally not instaminable.
 
-    2. The <code>.jar</code> will be in <code>build/libs/</code>
+The mod configuration including the affected blocks list and the target hardness can be easily edited through Mod Menu or directly through `config/instamine.json` after its generation.
+
+## Servers
+Instamine works server-side for all players, even without the mod installed on their client.
+
+Installing it on both server and client is recommended so the mining animation stays visually consistent.
+
+## Installation
+#### Download Release
+1. Download the latest version from the official <a href="https://modrinth.com/mod/instamine">Modrinth page</a>
+2. Make sure you have all the required <a href="#dependencies">Dependencies</a>
+3. Place all the `jar` files in your `mods` directory
+
+#### Build From Source
+Requirements:
+- Java 25
+- Gradle 9.4.0
+
+```bash
+.\gradlew.bat build
+```
+
+Built `jar` file should be located in `build/libs`
 
 ## License
 MIT License
