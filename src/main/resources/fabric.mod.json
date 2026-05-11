@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "instamine",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "name": "Instamine",
   "icon": "assets/instamine.png",
   "description": "A mod made to deal with harder blocks a lot easier.",
