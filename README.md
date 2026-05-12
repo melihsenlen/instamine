@@ -36,9 +36,9 @@ Installing it on both server and client is recommended so the mining animation s
 
 ## Installation
 #### Download Release
-1. Download the latest version from the official <a href="https://modrinth.com/mod/instamine">Modrinth page</a>
+1. Download the latest version from <a href="https://modrinth.com/mod/instamine">Modrinth</a> or <a href="https://www.curseforge.com/minecraft/mc-mods/instamine">CurseForge</a>
 2. Make sure you have all the required <a href="#dependencies">Dependencies</a>
-3. Place all the `jar` files in your `mods` directory
+3. Place all the `.jar` files in your `mods` directory
 
 #### Build From Source
 Requirements:
@@ -49,7 +49,7 @@ Requirements:
 .\gradlew.bat build
 ```
 
-Built `jar` file should be located in `build/libs`
+Built `.jar` file should be located in `build/libs`
 
 ## License
 MIT License
