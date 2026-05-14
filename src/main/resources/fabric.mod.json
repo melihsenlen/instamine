@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "instamine",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "name": "Instamine",
-  "icon": "assets/instamine.png",
+  "icon": "assets/icon.png",
   "description": "A mod made to deal with harder blocks a lot easier.",
   "authors": ["m9rgen"],
   "license": "MIT",
@@ -11,9 +11,6 @@
   "entrypoints": {
     "main": [
       "com.instamine.Instamine"
-    ],
-    "client": [
-      "com.instamine.InstamineClient"
     ],
     "modmenu": [
       "com.instamine.InstamineClient"
@@ -23,10 +20,11 @@
     "instamine.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.0",
-    "fabric-api": "*",
     "minecraft": "26.1.x",
-    "cloth-config": "*",
-    "modmenu": "*"
+    "fabricloader": ">=0.18.0",
+    "cloth-config": "*"
+  },
+  "suggests": {
+    "modmenu": ">=18.0.0-alpha.8"
   }
 }

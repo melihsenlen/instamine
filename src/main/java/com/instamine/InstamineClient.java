@@ -39,7 +39,6 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
                 .setDefaultValue(1.5f)
                 .setMin(0.1f)
                 .setMax(100f)
-                .setTooltip(net.minecraft.network.chat.Component.literal("Stone: 1.5, Cobblestone: 2.0, Deepslate: 3.0, Obsidian: 50"))
                 .setSaveConsumer(value -> {
                     Instamine.hardness = value;
                     Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
@@ -53,7 +52,6 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
                     new ArrayList<>(Instamine.blocks)
                 )
                 .setDefaultValue(new ArrayList<>(Instamine.DEFAULTS))
-                .setTooltip(net.minecraft.network.chat.Component.literal("Provide block ID"))
                 .setInsertInFront(true)
                 .setExpanded(true)
                 .setSaveConsumer(newList -> Instamine.saveConfig(

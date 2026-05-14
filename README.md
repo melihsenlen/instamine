@@ -11,8 +11,6 @@ Instamine fixes that by reducing the hardness of selected blocks to match the ha
 - Works server-side without requiring clients to install the mod
 
 ## Dependencies
-- Minecraft 26.1.x
-- <a href="https://modrinth.com/mod/fabric-api">Fabric API</a>
 - <a href="https://modrinth.com/mod/cloth-config">Cloth Config API</a>
 - <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
 
