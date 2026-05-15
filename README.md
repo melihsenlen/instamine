@@ -1,8 +1,8 @@
-<img src="src\main\resources\assets\icon.png"></img>
+<img src="src/main/resources/assets/instamine/icon.png"></img>
 # Instamine
 Mining deepslate has always felt inconsistent. Same tools, same enchants, slower mining speed for no meaningful gameplay reason.
 
-Instamine fixes that by reducing the hardness of selected blocks to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
+Instamine fixes that by reducing the hardness of **selected blocks** to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
 
 ## Features
 - Makes **deepslate**, **endstone**, and **cobblestone** instamineable out of the box
@@ -17,7 +17,7 @@ Instamine fixes that by reducing the hardness of selected blocks to match the ha
 ## Configuration
 
 #### Default Changes
-| Block | Vanilla Hardness | Target Hardness |
+| Block | Vanilla Hardness | Instamine Hardness |
 |---|---:|---:|
 | Deepslate | 3.0 | 1.5 |
 | Endstone | 3.0 | 1.5 |
@@ -25,12 +25,12 @@ Instamine fixes that by reducing the hardness of selected blocks to match the ha
 
 `1.5` is the vanilla hardness of stone, and yes cobblestone is originally not instaminable.
 
-The mod configuration including the affected blocks list and the target hardness can be easily edited through Mod Menu or directly through `config/instamine.json` after its generation.
+The mod configuration includes the blocks list and the hardness value that can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
 
 ## Servers
 Instamine works server-side for all players, even without the mod installed on their client.
 
-Installing it on both server and client is recommended so the mining animation stays visually consistent.
+Installing it on both server and client is recommended however so the mining animation stays visually consistent.
 
 ## Installation
 #### Download Release

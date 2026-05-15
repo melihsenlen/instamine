@@ -7,7 +7,6 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 
@@ -27,13 +26,25 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             ConfigCategory category = builder.getOrCreateCategory(
                 net.minecraft.network.chat.Component.literal("Blocks")
             );
-            category.setCategoryBackground(Identifier.parse("minecraft:textures/block/deepslate.png"));
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
             category.addEntry(
+                entryBuilder.startBooleanToggle(
+                    net.minecraft.network.chat.Component.literal("Enabled"),
+                    Instamine.enabled
+                )
+                .setDefaultValue(true)
+                .setSaveConsumer(value -> {
+                    Instamine.enabled = value;
+                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                })
+                .build()
+            );
+
+            category.addEntry(
                 entryBuilder.startFloatField(
-                    net.minecraft.network.chat.Component.literal("Target Hardness"),
+                    net.minecraft.network.chat.Component.literal("Hardness"),
                     Instamine.hardness
                 )
                 .setDefaultValue(1.5f)
@@ -48,7 +59,7 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
 
             category.addEntry(
                 entryBuilder.startStrList(
-                    net.minecraft.network.chat.Component.literal("Affected Blocks"),
+                    net.minecraft.network.chat.Component.literal("Blocks"),
                     new ArrayList<>(Instamine.blocks)
                 )
                 .setDefaultValue(new ArrayList<>(Instamine.DEFAULTS))
@@ -59,6 +70,15 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
                 ))
                 .build()
             );
+
+            category.addEntry(
+                entryBuilder.startTextDescription(
+                    net.minecraft.network.chat.Component.literal("Thanks for using Instamine!")
+                    .withStyle(style -> style.withColor(0xFFFF00))
+                )
+                .build()
+            );
+
             return builder.build();
         };
     }

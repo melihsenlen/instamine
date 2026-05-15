@@ -31,6 +31,7 @@ public class Instamine implements ModInitializer {
 
     public static List<String> blocks = DEFAULTS;
     public static float hardness = 1.5f;
+    public static Boolean enabled = true;
 
     @Override
     public void onInitialize() {
@@ -47,6 +48,7 @@ public class Instamine implements ModInitializer {
                 Config config = GSON.fromJson(json, Config.class);
                 blocks = config.blocks != null ? config.blocks : DEFAULTS;
                 hardness = config.hardness > 0 ? config.hardness : 1.5f;
+                enabled = config.enabled != null ? config.enabled : true;
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to read config, using defaults", e);
                 blocks = DEFAULTS;
@@ -55,7 +57,7 @@ public class Instamine implements ModInitializer {
             blocks = DEFAULTS;
             try {
                 Files.createDirectories(configDir);
-                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS, 1.5f)));
+                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS, 1.5f, true)));
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to write default config", e);
             }
@@ -66,7 +68,7 @@ public class Instamine implements ModInitializer {
     public static void saveConfig(Path configDir, List<String> newBlocks) {
     Path configFile = configDir.resolve("instamine.json");
     try {
-        Files.writeString(configFile, GSON.toJson(new Config(newBlocks, hardness)));
+        Files.writeString(configFile, GSON.toJson(new Config(newBlocks, hardness, enabled)));
         blocks = newBlocks;
         applyConfig();
     } catch (IOException e) {
@@ -85,5 +87,5 @@ public class Instamine implements ModInitializer {
             BuiltInRegistries.BLOCK.get(loc).ifPresent(h -> BLOCK_SET.add(h.value()));
         }
     }
-    private record Config(List<String> blocks, float hardness) {}
+    private record Config(List<String> blocks, float hardness, Boolean enabled) {}
 }

@@ -23,7 +23,8 @@ public abstract class Hardness {
     private void override(Player player, BlockGetter world, BlockPos pos, CallbackInfoReturnable<Float> cir) {
         BlockState state = (BlockState)(Object) this;
         Block block = state.getBlock();
-
+        
+        if (!Instamine.enabled) return;
         if (!Instamine.BLOCK_SET.contains(block)) return;
 
         float speed = player.getDestroySpeed(state);

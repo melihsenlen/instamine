@@ -1,13 +1,20 @@
 {
   "schemaVersion": 1,
   "id": "instamine",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "name": "Instamine",
-  "icon": "assets/icon.png",
-  "description": "A mod made to deal with harder blocks a lot easier.",
+  "icon": "assets/instamine/icon.png",
+  "description": "A mod made to deal with harder blocks a lot easier, like deepslate.",
   "authors": ["m9rgen"],
   "license": "MIT",
   "environment": "*",
+
+  "contact": {
+    "homepage": "https://modrinth.com/mod/instamine",
+    "issues": "https://github.com/melihsenlen/instamine/issues",
+    "sources": "https://github.com/melihsenlen/instamine"
+  },
+
   "entrypoints": {
     "main": [
       "com.instamine.Instamine"
@@ -16,14 +23,17 @@
       "com.instamine.InstamineClient"
     ]
   },
+
   "mixins": [
     "instamine.mixins.json"
   ],
+
   "depends": {
     "minecraft": "26.1.x",
     "fabricloader": ">=0.18.0",
-    "cloth-config": "*"
+    "cloth-config": ">=26.1.154"
   },
+
   "suggests": {
     "modmenu": ">=18.0.0-alpha.8"
   }
