@@ -1,4 +1,4 @@
-<img src="src/main/resources/assets/instamine/icon.png"></img>
+<img src="src/main/resources/assets/instamine/icon.png" width="128"></img>
 # Instamine
 Mining deepslate has always felt inconsistent. Same tools, same enchants, slower mining speed for no meaningful gameplay reason.
 
