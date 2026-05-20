@@ -1,6 +1,5 @@
-package com.instamine.mixin;
+package m9rgen.instamine.mixin;
 
-import com.instamine.Instamine;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Block;
@@ -11,6 +10,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import m9rgen.instamine.Instamine;
 
 @Mixin(BlockBehaviour.BlockStateBase.class)
 public abstract class Hardness {

@@ -1,4 +1,4 @@
-package com.instamine;
+package m9rgen.instamine;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
