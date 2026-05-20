@@ -11,8 +11,10 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 - Works server-side without requiring clients to install the mod
 
 ## Dependencies
-- <a href="https://modrinth.com/mod/cloth-config">Cloth Config API</a>
-- <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
+
+#### Latest Release
+- Required: <a href="https://modrinth.com/mod/cloth-config">Cloth Config API</a>
+- Optional: <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
 
 ## Configuration
 
