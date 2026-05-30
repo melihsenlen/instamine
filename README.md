@@ -5,7 +5,7 @@ Mining deepslate has always felt inconsistent. Same tools, same enchants, slower
 Instamine fixes that by reducing the hardness of **selected blocks** to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
 
 ## Features
-- Makes **deepslate**, **endstone**, and **cobblestone** instamineable out of the box
+- Makes **deepslate**, **endstone**, **cobblestone**, all **ores** and all **logs** instamineable
 - Fully customizable block list through the **Mod Menu** mod or the config file
 - Configurable target hardness for those who have other things in mind
 - Works server-side without requiring clients to install the mod
@@ -24,10 +24,22 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 | Deepslate | 3.0 | 1.5 |
 | Endstone | 3.0 | 1.5 |
 | Cobblestone | 2.0 | 1.5 |
+| Ores (all variants) | 3.0 | 1.5 |
+| Logs & Wood (all variants) | 2.0 | 1.5 |
 
 `1.5` is the vanilla hardness of stone, and yes cobblestone is originally not instaminable.
 
 The mod configuration includes the blocks list and the hardness value that can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
+
+#### Block Groups
+The block list supports group keywords that expand to all blocks of that type:
+
+| Keyword | Spans |
+|---|---|
+| `ores` | All 20 vanilla ore variants (stone & deepslate, nether quartz, ancient debris) |
+| `logs` | All 34 vanilla log, wood, stripped log, and stripped wood variants |
+
+Group keywords are preserved as-is in the config file and are not mutable.
 
 ## Servers
 Instamine works server-side for all players, even without the mod installed on their client.

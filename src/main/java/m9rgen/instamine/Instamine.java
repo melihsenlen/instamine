@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
 
 public class Instamine implements ModInitializer {
     public static final String MOD_ID = "instamine";
@@ -24,10 +25,39 @@ public class Instamine implements ModInitializer {
     public static final Set<Block> BLOCK_SET = new HashSet<>();
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
+    public static final Map<String, List<String>> GROUPS = Map.of(
+        "ores", List.of(
+            "coal ore", "deepslate coal ore",
+            "iron ore", "deepslate iron ore",
+            "copper ore", "deepslate copper ore",
+            "gold ore", "deepslate gold ore", "nether gold ore",
+            "redstone ore", "deepslate redstone ore",
+            "emerald ore", "deepslate emerald ore",
+            "lapis ore", "deepslate lapis ore",
+            "diamond ore", "deepslate diamond ore",
+            "ancient debris", "nether quartz ore"
+        ),
+        "logs", List.of(
+            "oak log", "spruce log", "birch log", "jungle log",
+            "acacia log", "dark oak log", "mangrove log", "cherry log",
+            "oak wood", "spruce wood", "birch wood", "jungle wood",
+            "acacia wood", "dark oak wood", "mangrove wood", "cherry wood",
+            "stripped oak log", "stripped spruce log", "stripped birch log",
+            "stripped jungle log", "stripped acacia log", "stripped dark oak log",
+            "stripped mangrove log", "stripped cherry log",
+            "stripped oak wood", "stripped spruce wood", "stripped birch wood",
+            "stripped jungle wood", "stripped acacia wood", "stripped dark oak wood",
+            "stripped mangrove wood", "stripped cherry wood"
+        )
+    );
+
     public static final List<String> DEFAULTS = List.of(
         "deepslate",
         "end stone",
-        "cobblestone"
+        "cobblestone",
+        "ores",
+        "logs"
     );
 
     public static List<String> blocks = DEFAULTS;
@@ -98,13 +128,32 @@ public class Instamine implements ModInitializer {
         BLOCK_SET.clear();
         List<String> cleaned = new ArrayList<>();
 
-        for (String name : blocks) {
-            String resolved = parseBlock(name);
-            if (resolved == null) {
-                LOGGER.warn("Instamine: could not resolve '{}', skipping", name);
+        for (String entry : blocks) {
+            String key = entry.toLowerCase().trim();
+
+            if (GROUPS.containsKey(key)) {
+                cleaned.add(key);
+
+                for (String member : GROUPS.get(key)) {
+                    String resolved = parseBlock(member);
+
+                    if (resolved == null) {
+                        LOGGER.warn("Instamine: group '{}' member '{}' not found, skipping", key, member);
+                        continue;
+                    }
+                    BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
+                        .ifPresent(h -> BLOCK_SET.add(h.value()));
+                }
                 continue;
             }
-            BuiltInRegistries.BLOCK.get(Identifier.parse(resolved)).ifPresent(h -> BLOCK_SET.add(h.value()));
+            String resolved = parseBlock(entry);
+            
+            if (resolved == null) {
+                LOGGER.warn("Instamine: could not resolve '{}', skipping", entry);
+                continue;
+            }
+            BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
+                .ifPresent(h -> BLOCK_SET.add(h.value()));
             cleaned.add(prettyBlock(resolved));
         }
         blocks = cleaned;

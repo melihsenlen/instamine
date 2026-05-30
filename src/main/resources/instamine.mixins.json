@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.instamine.mixin",
+  "package": "m9rgen.instamine.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
     "Hardness"
