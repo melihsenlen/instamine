@@ -56,6 +56,7 @@ public class Instamine implements ModInitializer {
         "deepslate",
         "end stone",
         "cobblestone",
+        "cobbled deepslate",
         "ores",
         "logs"
     );
