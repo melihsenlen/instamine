@@ -17,6 +17,7 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 - Optional: <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
 
 ## Configuration
+The mod configuration includes the blocks list and the hardness value that can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
 
 #### Default Changes
 | Block | Vanilla Hardness | Instamine Hardness |
@@ -24,12 +25,12 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 | Deepslate | 3.0 | 1.5 |
 | Endstone | 3.0 | 1.5 |
 | Cobblestone | 2.0 | 1.5 |
-| Ores (all variants) | 3.0 | 1.5 |
+| Cobbled Deepslate | 3.5 | 1.5
+| Ores (all variants) | 4.5 | 1.5 |
 | Logs & Wood (all variants) | 2.0 | 1.5 |
 
 `1.5` is the vanilla hardness of stone, and yes cobblestone is originally not instaminable.
 
-The mod configuration includes the blocks list and the hardness value that can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
 
 #### Block Groups
 The block list supports group keywords that expand to all blocks of that type:
