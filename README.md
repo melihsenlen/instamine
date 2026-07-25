@@ -5,7 +5,7 @@ Mining deepslate has always felt inconsistent. Same tools, same enchants, slower
 Instamine fixes that by reducing the hardness of **selected blocks** to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
 
 ## Features
-- Makes **deepslate**, **endstone**, **cobblestone**, all **ores** and all **logs** instamineable
+- Makes **deepslate** and **endstone**  instamineable out of the box
 - Fully customizable block list through the **Mod Menu** mod or the config file
 - Configurable target hardness for those who have other things in mind
 - Works server-side without requiring clients to install the mod
@@ -17,7 +17,7 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 - Optional: <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
 
 ## Configuration
-The mod configuration includes the blocks list and the hardness value that can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
+The mod configuration includes the blocks list, the ore/log toggles, and the hardness value, all of which can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
 
 #### Default Changes
 | Block | Vanilla Hardness | Instamine Hardness |
@@ -26,26 +26,25 @@ The mod configuration includes the blocks list and the hardness value that can e
 | Endstone | 3.0 | 1.5 |
 | Cobblestone | 2.0 | 1.5 |
 | Cobbled Deepslate | 3.5 | 1.5
-| Ores (all variants) | 4.5 | 1.5 |
+| Ores (all variants) | 3.0 - 4.5 | 1.5 |
 | Logs & Wood (all variants) | 2.0 | 1.5 |
 
-`1.5` is the vanilla hardness of stone, and yes cobblestone is originally not instaminable.
+`1.5` is the vanilla hardness of stone and yes cobblestone is originally not instaminable.
 
+#### Ores & Logs
+Rather than typing keywords into the block list, ores and logs each get their own dedicated toggle in the config screen.
 
-#### Block Groups
-The block list supports group keywords that expand to all blocks of that type:
+| Toggle | Spans | Default |
+|---|---|---:|
+| Ores | All 20 vanilla ore variants (stone & deepslate) | On |
+| Logs | All 42 vanilla log/stem, wood/hyphae, and stripped variants | Off |
 
-| Keyword | Spans |
-|---|---|
-| `ores` | All 20 vanilla ore variants (stone & deepslate, nether quartz, ancient debris) |
-| `logs` | All 34 vanilla log, wood, stripped log, and stripped wood variants |
-
-Group keywords are preserved as-is in the config file and are not mutable.
+Everything else, individual blocks like `deepslate` or `end stone`, still goes in the block list.
 
 ## Servers
-Instamine works server-side for all players, even without the mod installed on their client.
+Instamine works server-side for all players, technically even without the mod installed on their client.
 
-Installing it on both server and client is recommended however so the mining animation stays visually consistent.
+Installing it on both server and client is recommended however so the mining animation stays visually consistent and coherent.
 
 ## Installation
 #### Download Release
@@ -54,15 +53,18 @@ Installing it on both server and client is recommended however so the mining ani
 3. Place all the `.jar` files in your `mods` directory
 
 #### Build From Source
+
 Requirements:
 - Java 25
 - Gradle 9.4.0
+
+Wrapper is already included, so you just have to build it.
 
 ```bash
 .\gradlew.bat build
 ```
 
-Built `.jar` file should be located in `build/libs`
+Built `.jar` file should be located in `build/libs`.
 
 ## License
 MIT License

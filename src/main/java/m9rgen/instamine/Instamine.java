@@ -48,7 +48,11 @@ public class Instamine implements ModInitializer {
             "stripped mangrove log", "stripped cherry log",
             "stripped oak wood", "stripped spruce wood", "stripped birch wood",
             "stripped jungle wood", "stripped acacia wood", "stripped dark oak wood",
-            "stripped mangrove wood", "stripped cherry wood"
+            "stripped mangrove wood", "stripped cherry wood",
+            "crimson stem", "warped stem",
+            "crimson hyphae", "warped hyphae",
+            "stripped crimson stem", "stripped warped stem",
+            "stripped crimson hyphae", "stripped warped hyphae"
         )
     );
 
@@ -56,14 +60,14 @@ public class Instamine implements ModInitializer {
         "deepslate",
         "end stone",
         "cobblestone",
-        "cobbled deepslate",
-        "ores",
-        "logs"
+        "cobbled deepslate"
     );
 
     public static List<String> blocks = DEFAULTS;
     public static float hardness = 1.5f;
     public static Boolean enabled = true;
+    public static boolean ores = true;
+    public static boolean logs = false;
 
     @Override
     public void onInitialize() {
@@ -81,6 +85,9 @@ public class Instamine implements ModInitializer {
                 blocks = config.blocks != null ? config.blocks : DEFAULTS;
                 hardness = config.hardness > 0 ? config.hardness : 1.5f;
                 enabled = config.enabled != null ? config.enabled : true;
+                ores = config.ores != null ? config.ores : true;
+                logs = config.logs != null ? config.logs : false;
+
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to read config, using defaults", e);
                 blocks = DEFAULTS;
@@ -89,7 +96,7 @@ public class Instamine implements ModInitializer {
             blocks = DEFAULTS;
             try {
                 Files.createDirectories(configDir);
-                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS, 1.5f, true)));
+                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS, 1.5f, true, true, false)));
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to write default config", e);
             }
@@ -100,7 +107,9 @@ public class Instamine implements ModInitializer {
     public static void saveConfig(Path configDir, List<String> newBlocks) {
         Path configFile = configDir.resolve("instamine.json");
         try {
-            Files.writeString(configFile, GSON.toJson(new Config(newBlocks, hardness, enabled)));
+            Files.writeString(configFile, GSON.toJson(
+                new Config(newBlocks, hardness, enabled, ores, logs)
+            ));
             blocks = newBlocks;
             applyConfig();
         } catch (IOException e) {
@@ -125,28 +134,30 @@ public class Instamine implements ModInitializer {
         return path.replace("_", " ");
     }
 
+    private static void addGroup(String key) {
+        for (String member : GROUPS.get(key)) {
+            String resolved = parseBlock(member);
+
+            if (resolved == null) {
+                LOGGER.warn("Instamine: group '{}' member '{}' not found, skipping", key, member);
+                continue;
+            }
+            BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
+                .ifPresent(h -> BLOCK_SET.add(h.value()));
+        }
+    }
+
     public static void applyConfig() {
         BLOCK_SET.clear();
         List<String> cleaned = new ArrayList<>();
 
+        if (ores) {addGroup("ores");}
+        if (logs) {addGroup("logs");}
+
         for (String entry : blocks) {
             String key = entry.toLowerCase().trim();
 
-            if (GROUPS.containsKey(key)) {
-                cleaned.add(key);
-
-                for (String member : GROUPS.get(key)) {
-                    String resolved = parseBlock(member);
-
-                    if (resolved == null) {
-                        LOGGER.warn("Instamine: group '{}' member '{}' not found, skipping", key, member);
-                        continue;
-                    }
-                    BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
-                        .ifPresent(h -> BLOCK_SET.add(h.value()));
-                }
-                continue;
-            }
+            if (GROUPS.containsKey(key)) {continue;}
             String resolved = parseBlock(entry);
             
             if (resolved == null) {
@@ -160,5 +171,7 @@ public class Instamine implements ModInitializer {
         blocks = cleaned;
     }
 
-    private record Config(List<String> blocks, float hardness, Boolean enabled) {}
+    private record Config(
+        List<String> blocks, float hardness, Boolean enabled, Boolean ores, Boolean logs
+    ) {}
 }

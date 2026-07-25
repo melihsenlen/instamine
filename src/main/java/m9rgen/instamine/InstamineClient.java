@@ -72,6 +72,32 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             );
 
             category.addEntry(
+                entryBuilder.startBooleanToggle(
+                    net.minecraft.network.chat.Component.literal("Ores"),
+                    Instamine.ores
+                )
+                .setDefaultValue(true)
+                .setSaveConsumer(value -> {
+                    Instamine.ores = value;
+                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                })
+                .build()
+            );
+
+            category.addEntry(
+                entryBuilder.startBooleanToggle(
+                    net.minecraft.network.chat.Component.literal("Logs"),
+                    Instamine.logs
+                )
+                .setDefaultValue(false)
+                .setSaveConsumer(value -> {
+                    Instamine.logs = value;
+                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                })
+                .build()
+            );
+
+            category.addEntry(
                 entryBuilder.startTextDescription(
                     net.minecraft.network.chat.Component.literal("Thanks for using Instamine!")
                     .withStyle(style -> style.withColor(0xFFFF00))
