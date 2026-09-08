@@ -5,16 +5,16 @@ Mining deepslate has always felt inconsistent. Same tools, same enchants, slower
 Instamine fixes that by reducing the hardness of **selected blocks** to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
 
 ## Features
-- Makes **deepslate** and **endstone**  instamineable out of the box
-- Fully customizable block list through the **Mod Menu** mod or the config file
+- Makes **deepslate** & **endstone**  instamineable out of the box
+- Fully customizable block list through the **Mod Menu** config screen
 - Configurable target hardness for those who have other things in mind
-- Works server-side without requiring clients to install the mod
+- Works server-side without implicitly requiring clients to install the mod
 
 ## Dependencies
 
 #### Latest Release
-- Required: <a href="https://modrinth.com/mod/cloth-config">Cloth Config API</a>
-- Optional: <a href="https://modrinth.com/mod/modmenu">Mod Menu</a>
+- Required: <a href="https://github.com/shedaniel/cloth-config">Cloth Config API</a>
+- Optional: <a href="https://github.com/TerraformersMC/ModMenu">Mod Menu</a>
 
 ## Configuration
 The mod configuration includes the blocks list, the ore/log toggles, and the hardness value, all of which can easily be edited through Mod Menu or directly through `config/instamine.json` after its generation.
@@ -27,12 +27,12 @@ The mod configuration includes the blocks list, the ore/log toggles, and the har
 | Cobblestone | 2.0 | 1.5 |
 | Cobbled Deepslate | 3.5 | 1.5
 | Ores (all variants) | 3.0 - 4.5 | 1.5 |
-| Logs & Wood (all variants) | 2.0 | 1.5 |
+| Logs & Wood (all variants) | 2.0 | 2.0 (by default) |
 
 `1.5` is the vanilla hardness of stone and yes cobblestone is originally not instaminable.
 
 #### Ores & Logs
-Rather than typing keywords into the block list, ores and logs each get their own dedicated toggle in the config screen.
+Rather than typing blocks seperately into the block list, ores and logs each get their own dedicated toggle in the config screen.
 
 | Toggle | Spans | Default |
 |---|---|---:|
@@ -41,10 +41,10 @@ Rather than typing keywords into the block list, ores and logs each get their ow
 
 Everything else, individual blocks like `deepslate` or `end stone`, still goes in the block list.
 
-## Servers
-Instamine works server-side for all players, technically even without the mod installed on their client.
+## Multiplayer
+Instamine works server-side for all players, technically even without the mod installed on their client, installing it on the client too is recommended however mainly so that the mining animation stays visually consistent.
 
-Installing it on both server and client is recommended however so the mining animation stays visually consistent and coherent.
+Having the mod client-side only won't let you instamine (on servers that dosen't have the mod installed).
 
 ## Installation
 #### Download Release
@@ -64,7 +64,7 @@ Wrapper is already included, so you just have to build it.
 .\gradlew.bat build
 ```
 
-Built `.jar` file should be located in `build/libs`.
+Built `.jar` file with the corresponding version name should be located in `build/libs`.
 
 ## License
 MIT License
