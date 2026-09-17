@@ -41,16 +41,21 @@ public class Instamine implements ModInitializer {
         "logs", List.of(
             "oak log", "spruce log", "birch log", "jungle log",
             "acacia log", "dark oak log", "mangrove log", "cherry log",
-            "oak wood", "spruce wood", "birch wood", "jungle wood",
-            "acacia wood", "dark oak wood", "mangrove wood", "cherry wood",
+            "poplar log", "oak wood", "spruce wood", "birch wood",
+            "jungle wood", "acacia wood", "dark oak wood", "mangrove wood",
+            "cherry wood", "poplar wood",
+
             "stripped oak log", "stripped spruce log", "stripped birch log",
             "stripped jungle log", "stripped acacia log", "stripped dark oak log",
-            "stripped mangrove log", "stripped cherry log",
+            "stripped mangrove log", "stripped cherry log", "stripped poplar log",
+
             "stripped oak wood", "stripped spruce wood", "stripped birch wood",
             "stripped jungle wood", "stripped acacia wood", "stripped dark oak wood",
-            "stripped mangrove wood", "stripped cherry wood",
+            "stripped mangrove wood", "stripped cherry wood", "stripped poplar wood",
+
             "crimson stem", "warped stem",
             "crimson hyphae", "warped hyphae",
+            
             "stripped crimson stem", "stripped warped stem",
             "stripped crimson hyphae", "stripped warped hyphae"
         )
