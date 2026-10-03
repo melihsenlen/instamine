@@ -20,12 +20,10 @@ import java.util.Set;
 import java.util.Map;
 
 public class Instamine implements ModInitializer {
-    public static final String MOD_ID = "instamine";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final Set<Block> BLOCK_SET = new HashSet<>();
-
+    public static final Logger LOGGER = LoggerFactory.getLogger("instamine");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    public static final Set<Block> BLOCK_SET = new HashSet<>();
     public static final Map<String, List<String>> GROUPS = Map.of(
         "ores", List.of(
             "coal ore", "deepslate coal ore",
@@ -36,26 +34,31 @@ public class Instamine implements ModInitializer {
             "emerald ore", "deepslate emerald ore",
             "lapis ore", "deepslate lapis ore",
             "diamond ore", "deepslate diamond ore",
-            "ancient debris", "nether quartz ore"
+            "nether quartz ore"
         ),
+        
         "logs", List.of(
             "oak log", "spruce log", "birch log", "jungle log",
             "acacia log", "dark oak log", "mangrove log", "cherry log",
-            "poplar log", "oak wood", "spruce wood", "birch wood",
+            "pale oak log", "poplar log",
+
+            "oak wood", "spruce wood", "birch wood",
             "jungle wood", "acacia wood", "dark oak wood", "mangrove wood",
-            "cherry wood", "poplar wood",
+            "cherry wood", "pale oak wood", "poplar wood",
 
             "stripped oak log", "stripped spruce log", "stripped birch log",
             "stripped jungle log", "stripped acacia log", "stripped dark oak log",
-            "stripped mangrove log", "stripped cherry log", "stripped poplar log",
+            "stripped mangrove log", "stripped cherry log", "stripped pale oak log",
+            "stripped poplar log",
 
             "stripped oak wood", "stripped spruce wood", "stripped birch wood",
             "stripped jungle wood", "stripped acacia wood", "stripped dark oak wood",
-            "stripped mangrove wood", "stripped cherry wood", "stripped poplar wood",
+            "stripped mangrove wood", "stripped cherry wood", "stripped pale oak wood",
+            "stripped poplar wood",
 
             "crimson stem", "warped stem",
             "crimson hyphae", "warped hyphae",
-            
+
             "stripped crimson stem", "stripped warped stem",
             "stripped crimson hyphae", "stripped warped hyphae"
         )
