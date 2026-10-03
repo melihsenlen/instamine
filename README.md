@@ -71,6 +71,7 @@ The mod configuration includes the block list, the ore and log toggles, the hard
 | Cobblestone | 2.0 | 1.5 |
 | Cobbled deepslate | 3.5 | 1.5 |
 | Ores (most variants) | 3.0 - 4.5 | 1.5 |
+| Ancient debris | 30.0 | 1.5 |
 | Logs & wood (all variants) | 2.0 | 2.0 (unchanged unless toggled) |
 
 `1.5` is the vanilla hardness of stone, and yes, cobblestone is not instamineable in vanilla. It's also the default target, and every selected block uses the same value.
