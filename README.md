@@ -16,7 +16,8 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 
 ## Dependencies
 
-Dependencies below are for the latest release of the game:
+> [!IMPORTANT]
+> Any updates on this mod will only follow the latest release of the game.
 
 | Dependency | Version | Required |
 |---|---|:---:|
@@ -24,9 +25,6 @@ Dependencies below are for the latest release of the game:
 | [Fabric Loader](https://fabricmc.net/use/installer/) | 0.15.5 + | Yes |
 | [Cloth Config API](https://github.com/shedaniel/cloth-config) | 26.3.158 + | Yes |
 | [Mod Menu](https://github.com/TerraformersMC/ModMenu) | 21.0.0-beta.1 + | No |
-
-> [!IMPORTANT]
-> Any updates on this mod will by plan follow the latest release of the game.
 
 ## Installation
 
@@ -116,12 +114,10 @@ Everything else, individual blocks like `deepslate` or `end stone`, still goes i
 ## Multiplayer
 
 > [!IMPORTANT]
-> Dedicated servers need Instamine and Cloth Config installed.
+> - Dedicated servers need Instamine and Cloth Config installed.
+> - Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
 
 Instamine works server-side for all players, technically even without the mod installed on their client. Installing it on the client too is recommended however, mainly so that the mining animation stays visually consistent. 
-
-> [!IMPORTANT]
-> Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
 
 ## License
 
