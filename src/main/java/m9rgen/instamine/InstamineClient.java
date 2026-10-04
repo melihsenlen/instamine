@@ -49,7 +49,6 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
                 )
                 .setDefaultValue(1.5f)
                 .setMin(0.1f)
-                .setMax(100f)
                 .setSaveConsumer(value -> {
                     Instamine.hardness = value;
                     Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);

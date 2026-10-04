@@ -4,7 +4,7 @@
 
 Mining deepslate has always felt inconsistent. Same tools, same enchants, slower mining speed for no meaningful gameplay reason.
 
-Instamine fixes that by reducing the hardness of **selected blocks** to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically instamineable, just like stone.
+Instamine fixes that by reducing the hardness of **selected blocks** to match the hardness of regular stone. This means with **Efficiency V & Haste II**, affected blocks become practically **instamineable**, just like stone.
 
 ## Features
 
@@ -16,31 +16,34 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 
 ## Dependencies
 
-The versions below are for the latest release.
+Dependencies below are for the latest release of the game:
 
 | Dependency | Version | Required |
 |---|---|:---:|
 | Minecraft | 26.3 | Yes |
-| [Fabric Loader](https://fabricmc.net/use/installer/) | 0.15.5 or newer | Yes |
-| [Cloth Config API](https://github.com/shedaniel/cloth-config) | 26.3.158 or newer | Yes |
-| [Mod Menu](https://github.com/TerraformersMC/ModMenu) | 21.0.0-beta.1 or newer | No |
+| [Fabric Loader](https://fabricmc.net/use/installer/) | 0.15.5 + | Yes |
+| [Cloth Config API](https://github.com/shedaniel/cloth-config) | 26.3.158 + | Yes |
+| [Mod Menu](https://github.com/TerraformersMC/ModMenu) | 21.0.0-beta.1 + | No |
 
-Fabric API is not required.
+> [!IMPORTANT]
+> Any updates on this mod will by plan follow the latest release of the game.
 
 ## Installation
 
-### Download release
+### Method #1: Download release
 
 1. Download the latest version from [Modrinth](https://modrinth.com/mod/instamine) or [CurseForge](https://www.curseforge.com/minecraft/mc-mods/instamine).
 2. Make sure you have all the required [dependencies](#dependencies).
-3. Place all the `.jar` files in your `mods` directory.
+3. Place all the `.jar` files in your `mods` file in your instance.
 
-### Build from source
+### Method #2: Build from source
 
 Requirements:
 
 - Java 25
-- Gradle 9.4.0 (the wrapper is already included, so you just have to build it)
+- Gradle 9.4.0
+
+The wrapper is already included, so you just have to build it.
 
 ```bash
 # Windows
@@ -70,8 +73,8 @@ The mod configuration includes the block list, the ore and log toggles, the hard
 | End stone | 3.0 | 1.5 |
 | Cobblestone | 2.0 | 1.5 |
 | Cobbled deepslate | 3.5 | 1.5 |
-| Ores (most variants) | 3.0 - 4.5 | 1.5 |
-| Logs & wood (all variants) | 2.0 | 2.0 (unchanged unless toggled) |
+| Ores | 3.0 - 4.5 | 1.5 |
+| Logs & wood | 2.0 | 2.0 (by default) |
 
 `1.5` is the vanilla hardness of stone, and yes, cobblestone is not instamineable in vanilla. It's also the default target, and every selected block uses the same value.
 
@@ -106,15 +109,19 @@ Everything else, individual blocks like `deepslate` or `end stone`, still goes i
 ```
 
 - Block names are forgiving. Case, spaces, underscores and a `minecraft:` prefix are ignored, so `End Stone`, `end_stone` and `minecraft:end_stone` all mean the same block. Entries that don't match any block are skipped, with a warning in the log.
-- `hardness` has to be above 0, otherwise the default of `1.5` is used. The config screen accepts values from 0.1 to 100.
+- `hardness` has to be above 0, otherwise the default of `1.5` is used. The config screen accepts values starting from 0.1.
 - Changes saved through Mod Menu apply right away. Edits to the file are read when the game or server starts.
 - Dedicated servers don't have Mod Menu, so edit the file there.
 
 ## Multiplayer
 
-Instamine works server-side for all players, technically even without the mod installed on their client. Installing it on the client too is recommended however, mainly so that the mining animation stays visually consistent. Dedicated servers need Instamine and Cloth Config installed.
+> [!IMPORTANT]
+> Dedicated servers need Instamine and Cloth Config installed.
 
-Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
+Instamine works server-side for all players, technically even without the mod installed on their client. Installing it on the client too is recommended however, mainly so that the mining animation stays visually consistent. 
+
+> [!IMPORTANT]
+> Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
 
 ## License
 
