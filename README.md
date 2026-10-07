@@ -15,9 +15,7 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 - Works server-side without requiring clients to install the mod
 
 ## Dependencies
-
-> [!IMPORTANT]
-> Any updates on this mod will only follow the latest release of the game.
+Versions below are for the latest release:
 
 | Dependency | Version | Required |
 |---|---|:---:|
@@ -32,7 +30,7 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 
 1. Download the latest version from [Modrinth](https://modrinth.com/mod/instamine) or [CurseForge](https://www.curseforge.com/minecraft/mc-mods/instamine).
 2. Make sure you have all the required [dependencies](#dependencies).
-3. Place all the `.jar` files in your `mods` file in your instance.
+3. Place all the `.jar` files in your `mods` directory.
 
 ### Method #2: Build from source
 
@@ -106,17 +104,16 @@ Everything else, individual blocks like `deepslate` or `end stone`, still goes i
 }
 ```
 
-> [!NOTE]
-> - Block names are forgiving. Case, spaces, underscores and a `minecraft:` prefix are ignored, so `End Stone`, `end_stone` and `minecraft:end_stone` all mean the same block. Entries that don't match any block are skipped, with a warning in the log.
-> - `hardness` has to be above 0, otherwise the default of `1.5` is used. The config screen accepts values starting from 0.1.
-> - Changes saved through Mod Menu apply right away. Edits to the file are read when the game or server starts.
-> - Dedicated servers don't have Mod Menu, so edit the file there.
+- Block names are forgiving. Case, spaces, underscores and a `minecraft:` prefix are ignored, so `End Stone`, `end_stone` and `minecraft:end_stone` all mean the same block. Entries that don't match any block are skipped, with a warning in the log.
+- `hardness` has to be above 0, otherwise the default of `1.5` is used. The config screen accepts values starting from 0.1.
+- Changes saved through Mod Menu apply right away. Edits to the file are read when the game or server starts.
+
+Dedicated servers don't have Mod Menu, so edit the file there.
 
 ## Multiplayer
 
-> [!IMPORTANT]
-> - Dedicated servers need Instamine and Cloth Config installed.
-> - Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
+- Dedicated servers need Instamine and Cloth Config installed.
+- Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
 
 Instamine works server-side for all players, technically even without the mod installed on their client. Installing it on the client too is recommended however, mainly so that the mining animation stays visually consistent. 
 
