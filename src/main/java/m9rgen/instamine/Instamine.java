@@ -61,6 +61,13 @@ public class Instamine implements ModInitializer {
 
             "stripped crimson stem", "stripped warped stem",
             "stripped crimson hyphae", "stripped warped hyphae"
+        ),
+
+        "planks", List.of(
+            "oak planks", "spruce planks", "birch planks", "jungle planks",
+            "acacia planks", "dark oak planks", "mangrove planks", "cherry planks",
+            "pale oak planks", "bamboo planks", "poplar planks",
+            "crimson planks", "warped planks"
         )
     );
 
@@ -72,10 +79,12 @@ public class Instamine implements ModInitializer {
     );
 
     public static List<String> blocks = DEFAULTS;
-    public static float hardness = 1.5f;
+    public static float hardness  = 1.5f;
     public static Boolean enabled = true;
-    public static boolean ores = true;
-    public static boolean logs = false;
+
+    public static boolean ores   = true;
+    public static boolean logs   = false;
+    public static boolean planks = false;
 
     @Override
     public void onInitialize() {
@@ -90,11 +99,13 @@ public class Instamine implements ModInitializer {
             try {
                 String json = Files.readString(configFile);
                 Config config = GSON.fromJson(json, Config.class);
-                blocks = config.blocks != null ? config.blocks : DEFAULTS;
+                blocks   = config.blocks != null ? config.blocks : DEFAULTS;
                 hardness = config.hardness > 0 ? config.hardness : 1.5f;
-                enabled = config.enabled != null ? config.enabled : true;
-                ores = config.ores != null ? config.ores : true;
-                logs = config.logs != null ? config.logs : false;
+                enabled  = config.enabled != null ? config.enabled : true;
+
+                ores     = config.ores   != null ? config.ores : true;
+                logs     = config.logs   != null ? config.logs : false;
+                planks   = config.planks != null ? config.logs : false;
 
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to read config, using defaults", e);
@@ -104,7 +115,16 @@ public class Instamine implements ModInitializer {
             blocks = DEFAULTS;
             try {
                 Files.createDirectories(configDir);
-                Files.writeString(configFile, GSON.toJson(new Config(DEFAULTS, 1.5f, true, true, false)));
+                Files.writeString(configFile, GSON.toJson(
+                    new Config(
+                        DEFAULTS,
+                        1.5f,
+                        true,
+                        true,
+                        false,
+                        false
+                    )
+                ));
             } catch (IOException e) {
                 LOGGER.error("Instamine: failed to write default config", e);
             }
@@ -112,13 +132,20 @@ public class Instamine implements ModInitializer {
         applyConfig();
     }
 
-    public static void saveConfig(Path configDir, List<String> newBlocks) {
+    public static void saveConfig(Path configDir, List<String> news) {
         Path configFile = configDir.resolve("instamine.json");
         try {
             Files.writeString(configFile, GSON.toJson(
-                new Config(newBlocks, hardness, enabled, ores, logs)
+                new Config(
+                    news,
+                    hardness,
+                    enabled,
+                    ores,
+                    logs,
+                    planks
+                )
             ));
-            blocks = newBlocks;
+            blocks = news;
             applyConfig();
         } catch (IOException e) {
             LOGGER.error("Instamine: failed to save config", e);
@@ -159,8 +186,9 @@ public class Instamine implements ModInitializer {
         BLOCK_SET.clear();
         List<String> cleaned = new ArrayList<>();
 
-        if (ores) {addGroup("ores");}
-        if (logs) {addGroup("logs");}
+        if (ores)   {addGroup("ores");}
+        if (logs)   {addGroup("logs");}
+        if (planks) {addGroup("planks");}
 
         for (String entry : blocks) {
             String key = entry.toLowerCase().trim();
@@ -180,6 +208,11 @@ public class Instamine implements ModInitializer {
     }
 
     private record Config(
-        List<String> blocks, float hardness, Boolean enabled, Boolean ores, Boolean logs
+        List<String> blocks,
+        float hardness,
+        Boolean enabled,
+        Boolean ores,
+        Boolean logs,
+        Boolean planks
     ) {}
 }

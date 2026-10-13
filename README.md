@@ -11,7 +11,7 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 - Makes **deepslate** and **end stone** instamineable out of the box
 - Fully customizable block list through the **Mod Menu** config screen
 - Configurable target hardness for those who have other things in mind
-- Dedicated toggles for ores and logs, plus a master on/off switch
+- Dedicated toggles for ores, logs and planks, plus a master on/off switch
 - Works server-side without requiring clients to install the mod
 
 ## Dependencies
@@ -61,7 +61,7 @@ Tool speed, enchantments and effects like Efficiency and Haste still apply as us
 
 The mod configuration includes the block list, the ore and log toggles, the hardness value and the master switch. All of it can be edited through Mod Menu, or directly in `config/instamine.json` after its generation.
 
-### Default changes
+### Defaults
 
 | Block | Vanilla hardness | Instamine hardness |
 |---|---:|---:|
@@ -70,18 +70,19 @@ The mod configuration includes the block list, the ore and log toggles, the hard
 | Cobblestone | 2.0 | 1.5 |
 | Cobbled deepslate | 3.5 | 1.5 |
 | Ores | 3.0 - 4.5 | 1.5 |
-| Logs & wood | 2.0 | 2.0 (by default) |
+| Logs, wood & planks | 2.0 | 2.0 (by default) |
 
 `1.5` is the vanilla hardness of stone, and yes, cobblestone is not instamineable in vanilla. It's also the default target, and every selected block uses the same value.
 
-### Ores & logs
+### Toggles
 
 Rather than typing blocks separately into the block list, ores and logs each get their own dedicated toggle in the config screen.
 
 | Toggle | Spans | Default |
 |---|---|---:|
-| Ores | All 18 ore blocks: stone, deepslate and Nether variants | On |
-| Logs | All 48 vanilla log/stem, wood/hyphae, and stripped variants | Off |
+| Ores | All 18 stone, deepslate and nether variants | On |
+| Logs | All 48 log/stem, wood/hyphae, and stripped variants | Off |
+| Planks | All 13 overworld including bamboo planks and nether variants | Off |
 
 Everything else, individual blocks like `deepslate` or `end stone`, still goes in the block list.
 
@@ -112,7 +113,7 @@ Dedicated servers don't have Mod Menu, so edit the file there.
 
 ## Multiplayer
 
-- Dedicated servers need Instamine and Cloth Config installed.
+- Dedicated servers still need Cloth Config installed.
 - Having the mod client-side only won't let you instamine on servers that don't have the mod installed.
 
 Instamine works server-side for all players, technically even without the mod installed on their client. Installing it on the client too is recommended however, mainly so that the mining animation stays visually consistent. 
