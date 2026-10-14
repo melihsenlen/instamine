@@ -101,7 +101,8 @@ Everything else, individual blocks like `deepslate` or `end stone`, still goes i
   "hardness": 1.5,
   "enabled": true,
   "ores": true,
-  "logs": false
+  "logs": false,
+  "planks": false
 }
 ```
 
