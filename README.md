@@ -106,10 +106,6 @@ Everything else, individual blocks like `deepslate` or `end stone`, still goes i
 }
 ```
 
-- Block names are forgiving. Case, spaces, underscores and a `minecraft:` prefix are ignored, so `End Stone`, `end_stone` and `minecraft:end_stone` all mean the same block. Entries that don't match any block are skipped, with a warning in the log.
-- Changes saved through Mod Menu apply right away. Edits to the file are read when the game or server starts.
-- `hardness` has to be above 0, otherwise the default of `1.5` is used.
-
 Dedicated servers don't have Mod Menu, so edit the file there.
 
 ## Multiplayer
