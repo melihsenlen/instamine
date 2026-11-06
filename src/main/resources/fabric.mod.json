@@ -1,13 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "instamine",
-  "version": "1.2.11",
+  "version": "${version}",
   "name": "Instamine",
   "icon": "assets/instamine/icon.png",
   "description": "A mod made to deal with harder blocks a lot easier, like deepslate.",
   "authors": ["m9rgen"],
   "license": "MIT",
-  "environment": "*",
 
   "contact": {
     "homepage": "https://modrinth.com/mod/instamine",
@@ -20,7 +19,7 @@
       "m9rgen.instamine.Instamine"
     ],
     "modmenu": [
-      "m9rgen.instamine.InstamineClient"
+      "m9rgen.instamine.Client"
     ]
   },
 

@@ -1,5 +1,4 @@
 {
-  "required": true,
   "package": "m9rgen.instamine.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [

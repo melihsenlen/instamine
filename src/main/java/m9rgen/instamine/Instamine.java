@@ -1,7 +1,5 @@
 package m9rgen.instamine;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,9 +8,6 @@ import net.minecraft.world.level.block.Block;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +16,8 @@ import java.util.Map;
 
 public class Instamine implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("instamine");
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static final Set<Block> BLOCK_SET = new HashSet<>();
+    public static final Set<Block> BLOCKS = new HashSet<>();
     public static final Map<String, List<String>> GROUPS = Map.of(
         "ores", List.of(
             "coal ore", "deepslate coal ore",
@@ -71,85 +65,11 @@ public class Instamine implements ModInitializer {
         )
     );
 
-    public static final List<String> DEFAULTS = List.of(
-        "deepslate",
-        "end stone",
-        "cobblestone",
-        "cobbled deepslate"
-    );
-
-    public static List<String> blocks = DEFAULTS;
-    public static float hardness  = 1.5f;
-    public static Boolean enabled = true;
-
-    public static boolean ores   = true;
-    public static boolean logs   = false;
-    public static boolean planks = false;
-
     @Override
     public void onInitialize() {
-        loadConfig(FabricLoader.getInstance().getConfigDir());
-        LOGGER.info("Instamine loaded");
-    }
-
-    public static void loadConfig(Path configDir) {
-        Path configFile = configDir.resolve("instamine.json");
-
-        if (Files.exists(configFile)) {
-            try {
-                String json = Files.readString(configFile);
-                Config config = GSON.fromJson(json, Config.class);
-                blocks   = config.blocks != null ? config.blocks : DEFAULTS;
-                hardness = config.hardness > 0 ? config.hardness : 1.5f;
-                enabled  = config.enabled != null ? config.enabled : true;
-
-                ores     = config.ores   != null ? config.ores : true;
-                logs     = config.logs   != null ? config.logs : false;
-                planks   = config.planks != null ? config.logs : false;
-
-            } catch (IOException e) {
-                LOGGER.error("Instamine: failed to read config, using defaults", e);
-                blocks = DEFAULTS;
-            }
-        } else {
-            blocks = DEFAULTS;
-            try {
-                Files.createDirectories(configDir);
-                Files.writeString(configFile, GSON.toJson(
-                    new Config(
-                        DEFAULTS,
-                        1.5f,
-                        true,
-                        true,
-                        false,
-                        false
-                    )
-                ));
-            } catch (IOException e) {
-                LOGGER.error("Instamine: failed to write default config", e);
-            }
-        }
+        Config.load(FabricLoader.getInstance().getConfigDir());
         applyConfig();
-    }
-
-    public static void saveConfig(Path configDir, List<String> news) {
-        Path configFile = configDir.resolve("instamine.json");
-        try {
-            Files.writeString(configFile, GSON.toJson(
-                new Config(
-                    news,
-                    hardness,
-                    enabled,
-                    ores,
-                    logs,
-                    planks
-                )
-            ));
-            blocks = news;
-            applyConfig();
-        } catch (IOException e) {
-            LOGGER.error("Instamine: failed to save config", e);
-        }
+        LOGGER.info("Instamine loaded");
     }
 
     private static String parseBlock(String input) {
@@ -178,19 +98,19 @@ public class Instamine implements ModInitializer {
                 continue;
             }
             BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
-                .ifPresent(h -> BLOCK_SET.add(h.value()));
+                .ifPresent(h -> BLOCKS.add(h.value()));
         }
     }
 
     public static void applyConfig() {
-        BLOCK_SET.clear();
+        BLOCKS.clear();
         List<String> cleaned = new ArrayList<>();
 
-        if (ores)   {addGroup("ores");}
-        if (logs)   {addGroup("logs");}
-        if (planks) {addGroup("planks");}
+        if (Config.ores)   {addGroup("ores");}
+        if (Config.logs)   {addGroup("logs");}
+        if (Config.planks) {addGroup("planks");}
 
-        for (String entry : blocks) {
+        for (String entry : Config.blocks) {
             String key = entry.toLowerCase().trim();
 
             if (GROUPS.containsKey(key)) {continue;}
@@ -201,18 +121,9 @@ public class Instamine implements ModInitializer {
                 continue;
             }
             BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
-                .ifPresent(h -> BLOCK_SET.add(h.value()));
+                .ifPresent(h -> BLOCKS.add(h.value()));
             cleaned.add(prettyBlock(resolved));
         }
-        blocks = cleaned;
+        Config.blocks = cleaned;
     }
-
-    private record Config(
-        List<String> blocks,
-        float hardness,
-        Boolean enabled,
-        Boolean ores,
-        Boolean logs,
-        Boolean planks
-    ) {}
 }

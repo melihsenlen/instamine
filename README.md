@@ -12,7 +12,6 @@ Instamine fixes that by reducing the hardness of **selected blocks** to match th
 - Fully customizable block list through the **Mod Menu** config screen
 - Configurable target hardness for those who have other things in mind
 - Dedicated toggles for ores, logs and planks, plus a master on/off switch
-- Works server-side without requiring clients to install the mod
 
 ## Dependencies
 Versions below are for the latest release:
@@ -21,8 +20,8 @@ Versions below are for the latest release:
 |---|---|:---:|
 | Minecraft | 26.3 | Yes |
 | [Fabric Loader](https://fabricmc.net/use/installer/) | 0.15.5 + | Yes |
-| [Cloth Config API](https://github.com/shedaniel/cloth-config) | 26.3.158 + | Yes |
-| [Mod Menu](https://github.com/TerraformersMC/ModMenu) | 21.0.0-beta.1 + | No |
+| [Cloth Config API](https://modrinth.com/mod/cloth-config/versions) | 26.3.158 + | Yes |
+| [Mod Menu](https://modrinth.com/mod/modmenu/versions) | 21.0.0-beta.1 + | No |
 
 ## Installation
 

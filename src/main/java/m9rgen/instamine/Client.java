@@ -8,16 +8,12 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.api.Requirement;
 import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.api.ClientModInitializer;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class InstamineClient implements ModMenuApi, ClientModInitializer {
-
-    @Override
-    public void onInitializeClient() {
-    }
-
+public class Client implements ModMenuApi {
+    
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> {
@@ -32,12 +28,12 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             ConfigEntryBuilder entry = builder.entryBuilder();
             BooleanListEntry enabled = entry.startBooleanToggle(
                 net.minecraft.network.chat.Component.literal("Enabled"),
-                Instamine.enabled
+                Config.enabled
             )
             .setDefaultValue(true)
             .setSaveConsumer(value -> {
-                Instamine.enabled = value;
-                Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                Config.enabled = value;
+                save(Config.blocks);
             })
             .build();
 
@@ -48,14 +44,14 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             category.addEntry(
                 entry.startFloatField(
                     net.minecraft.network.chat.Component.literal("Hardness"),
-                    Instamine.hardness
+                    Config.hardness
                 )
                 .setDefaultValue(1.5f)
                 .setMin(0.1f)
                 .setRequirement(requirement)
                 .setSaveConsumer(value -> {
-                    Instamine.hardness = value;
-                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                    Config.hardness = value;
+                    save(Config.blocks);
                 })
                 .build()
             );
@@ -63,28 +59,26 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             category.addEntry(
                 entry.startStrList(
                     net.minecraft.network.chat.Component.literal("Blocks"),
-                    new ArrayList<>(Instamine.blocks)
+                    new ArrayList<>(Config.blocks)
                 )
-                .setDefaultValue(new ArrayList<>(Instamine.DEFAULTS))
+                .setDefaultValue(new ArrayList<>(Config.DEFAULT_BLOCKS))
                 .setInsertInFront(true)
                 .setExpanded(true)
                 .setRequirement(requirement)
-                .setSaveConsumer(newList -> Instamine.saveConfig(
-                    FabricLoader.getInstance().getConfigDir(), newList
-                ))
+                .setSaveConsumer(Client::save)
                 .build()
             );
 
             category.addEntry(
                 entry.startBooleanToggle(
                     net.minecraft.network.chat.Component.literal("Ores"),
-                    Instamine.ores
+                    Config.ores
                 )
                 .setDefaultValue(true)
                 .setRequirement(requirement)
                 .setSaveConsumer(value -> {
-                    Instamine.ores = value;
-                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                    Config.ores = value;
+                    save(Config.blocks);
                 })
                 .build()
             );
@@ -92,13 +86,13 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             category.addEntry(
                 entry.startBooleanToggle(
                     net.minecraft.network.chat.Component.literal("Logs"),
-                    Instamine.logs
+                    Config.logs
                 )
                 .setDefaultValue(false)
                 .setRequirement(requirement)
                 .setSaveConsumer(value -> {
-                    Instamine.logs = value;
-                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                    Config.logs = value;
+                    save(Config.blocks);
                 })
                 .build()
             );
@@ -106,13 +100,13 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
             category.addEntry(
                 entry.startBooleanToggle(
                     net.minecraft.network.chat.Component.literal("Planks"),
-                    Instamine.planks
+                    Config.planks
                 )
                 .setDefaultValue(false)
                 .setRequirement(requirement)
                 .setSaveConsumer(value -> {
-                    Instamine.planks = value;
-                    Instamine.saveConfig(FabricLoader.getInstance().getConfigDir(), Instamine.blocks);
+                    Config.planks = value;
+                    save(Config.blocks);
                 })
                 .build()
             );
@@ -126,5 +120,11 @@ public class InstamineClient implements ModMenuApi, ClientModInitializer {
 
             return builder.build();
         };
+    }
+
+    private static void save(List<String> blocks) {
+        if (Config.save(FabricLoader.getInstance().getConfigDir(), blocks)) {
+            Instamine.applyConfig();
+        }
     }
 }
