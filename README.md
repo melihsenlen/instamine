@@ -36,7 +36,7 @@ Versions below are for the latest release:
 Requirements:
 
 - Java 25
-- Gradle 9.4.0
+- Gradle 9.6.0
 
 The wrapper is already included, so you just have to build it.
 
