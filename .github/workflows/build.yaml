@@ -9,12 +9,9 @@ jobs:
     runs-on: ubuntu-26.04
     permissions:
       contents: write
-      packages: write
 
     steps:
       - uses: actions/checkout@v5
-
-      - run: chmod +x gradlew
 
       - uses: actions/setup-java@v5
         with:
@@ -24,11 +21,6 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
 
       - run: ./gradlew build
-
-      - run: ./gradlew publish
-        env:
-          USERNAME: ${{ github.actor }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: gh release upload "${{ github.event.release.tag_name }}" build/libs/*.jar --clobber
         env:

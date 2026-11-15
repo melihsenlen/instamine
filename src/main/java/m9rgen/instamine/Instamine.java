@@ -5,125 +5,130 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class Instamine implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("instamine");
 
-    public static final Set<Block> BLOCKS = new HashSet<>();
-    public static final Map<String, List<String>> GROUPS = Map.of(
-        "ores", List.of(
-            "coal ore", "deepslate coal ore",
-            "iron ore", "deepslate iron ore",
-            "copper ore", "deepslate copper ore",
-            "gold ore", "deepslate gold ore", "nether gold ore",
-            "redstone ore", "deepslate redstone ore",
-            "emerald ore", "deepslate emerald ore",
-            "lapis ore", "deepslate lapis ore",
-            "diamond ore", "deepslate diamond ore",
-            "nether quartz ore"
-        ),
-        
-        "logs", List.of(
-            "oak log", "spruce log", "birch log", "jungle log",
-            "acacia log", "dark oak log", "mangrove log", "cherry log",
-            "pale oak log", "poplar log",
+    // Replaced as a whole on every apply(), so the game never reads an incomplete set.
+    public static volatile Set<Block> BLOCKS = Set.of();
 
-            "oak wood", "spruce wood", "birch wood",
-            "jungle wood", "acacia wood", "dark oak wood", "mangrove wood",
-            "cherry wood", "pale oak wood", "poplar wood",
+    private static final List<String> ORES = List.of(
+        "coal ore", "deepslate coal ore",
+        "iron ore", "deepslate iron ore",
+        "copper ore", "deepslate copper ore",
+        "gold ore", "deepslate gold ore", "nether gold ore",
+        "redstone ore", "deepslate redstone ore",
+        "emerald ore", "deepslate emerald ore",
+        "lapis ore", "deepslate lapis ore",
+        "diamond ore", "deepslate diamond ore",
+        "nether quartz ore"
+    );
 
-            "stripped oak log", "stripped spruce log", "stripped birch log",
-            "stripped jungle log", "stripped acacia log", "stripped dark oak log",
-            "stripped mangrove log", "stripped cherry log", "stripped pale oak log",
-            "stripped poplar log",
+    private static final List<String> LOGS = List.of(
+        "oak log", "spruce log", "birch log", "jungle log",
+        "acacia log", "dark oak log", "mangrove log", "cherry log",
+        "pale oak log", "poplar log",
 
-            "stripped oak wood", "stripped spruce wood", "stripped birch wood",
-            "stripped jungle wood", "stripped acacia wood", "stripped dark oak wood",
-            "stripped mangrove wood", "stripped cherry wood", "stripped pale oak wood",
-            "stripped poplar wood",
+        "oak wood", "spruce wood", "birch wood",
+        "jungle wood", "acacia wood", "dark oak wood", "mangrove wood",
+        "cherry wood", "pale oak wood", "poplar wood",
 
-            "crimson stem", "warped stem",
-            "crimson hyphae", "warped hyphae",
+        "stripped oak log", "stripped spruce log", "stripped birch log",
+        "stripped jungle log", "stripped acacia log", "stripped dark oak log",
+        "stripped mangrove log", "stripped cherry log", "stripped pale oak log",
+        "stripped poplar log",
 
-            "stripped crimson stem", "stripped warped stem",
-            "stripped crimson hyphae", "stripped warped hyphae"
-        ),
+        "stripped oak wood", "stripped spruce wood", "stripped birch wood",
+        "stripped jungle wood", "stripped acacia wood", "stripped dark oak wood",
+        "stripped mangrove wood", "stripped cherry wood", "stripped pale oak wood",
+        "stripped poplar wood",
 
-        "planks", List.of(
-            "oak planks", "spruce planks", "birch planks", "jungle planks",
-            "acacia planks", "dark oak planks", "mangrove planks", "cherry planks",
-            "pale oak planks", "bamboo planks", "poplar planks",
-            "crimson planks", "warped planks"
-        )
+        "crimson stem", "warped stem",
+        "crimson hyphae", "warped hyphae",
+
+        "stripped crimson stem", "stripped warped stem",
+        "stripped crimson hyphae", "stripped warped hyphae"
+    );
+
+    private static final List<String> PLANKS = List.of(
+        "oak planks", "spruce planks", "birch planks", "jungle planks",
+        "acacia planks", "dark oak planks", "mangrove planks", "cherry planks",
+        "pale oak planks", "bamboo planks", "poplar planks",
+        "crimson planks", "warped planks"
     );
 
     @Override
     public void onInitialize() {
         Config.load(FabricLoader.getInstance().getConfigDir());
-        applyConfig();
+        Config.blocks = clean(Config.blocks);
+        apply();
         LOGGER.info("Instamine loaded");
     }
 
-    private static String parseBlock(String input) {
-    String name = input.contains(":") ? input.split(":", 2)[1] : input;
-    String normalized = name.toLowerCase().replaceAll("[\\s_]", "");
-    
-    for (Identifier loc : BuiltInRegistries.BLOCK.keySet()) {
-        if (loc.getPath().replaceAll("_", "").equals(normalized)) {
-            return loc.toString();
+    // Rebuilds BLOCKS from the current config.
+    public static void apply() {
+        Map<String, Identifier> ids = ids();
+        Set<Block> set = new HashSet<>();
+
+        if (Config.ores)   add(set, ids, ORES);
+        if (Config.logs)   add(set, ids, LOGS);
+        if (Config.planks) add(set, ids, PLANKS);
+        add(set, ids, Config.blocks);
+
+        BLOCKS = Set.copyOf(set);
+    }
+
+    // Turns typed names into the standard form used in the config, and drops unknown blocks.
+    public static List<String> clean(List<String> names) {
+        Map<String, Identifier> ids = ids();
+        Set<String> clean = new LinkedHashSet<>();
+
+        for (String name : names) {
+            Identifier id = find(ids, name);
+            if (id != null) clean.add(id.getPath().replace('_', ' '));
         }
-    }
-    return null;
-    }
-
-    private static String prettyBlock(String resolved) {
-        String path = resolved.contains(":") ? resolved.split(":", 2)[1] : resolved;
-        return path.replace("_", " ");
+        return new ArrayList<>(clean);
     }
 
-    private static void addGroup(String key) {
-        for (String member : GROUPS.get(key)) {
-            String resolved = parseBlock(member);
+    private static void add(Set<Block> set, Map<String, Identifier> ids, List<String> names) {
+        for (String name : names) {
+            Identifier id = find(ids, name);
 
-            if (resolved == null) {
-                LOGGER.warn("Instamine: group '{}' member '{}' not found, skipping", key, member);
+            if (id == null) {
+                LOGGER.warn("Unknown block '{}', skipping", name);
                 continue;
             }
-            BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
-                .ifPresent(h -> BLOCKS.add(h.value()));
+            BuiltInRegistries.BLOCK.get(id).ifPresent(holder -> set.add(holder.value()));
         }
     }
 
-    public static void applyConfig() {
-        BLOCKS.clear();
-        List<String> cleaned = new ArrayList<>();
+    private static Map<String, Identifier> ids() {
+        Map<String, Identifier> ids = new HashMap<>();
 
-        if (Config.ores)   {addGroup("ores");}
-        if (Config.logs)   {addGroup("logs");}
-        if (Config.planks) {addGroup("planks");}
-
-        for (String entry : Config.blocks) {
-            String key = entry.toLowerCase().trim();
-
-            if (GROUPS.containsKey(key)) {continue;}
-            String resolved = parseBlock(entry);
-            
-            if (resolved == null) {
-                LOGGER.warn("Instamine: could not resolve '{}', skipping", entry);
-                continue;
-            }
-            BuiltInRegistries.BLOCK.get(Identifier.parse(resolved))
-                .ifPresent(h -> BLOCKS.add(h.value()));
-            cleaned.add(prettyBlock(resolved));
+        for (Identifier id : BuiltInRegistries.BLOCK.keySet()) {
+            String key = squash(id.getPath());
+            if (id.getNamespace().equals("minecraft") || !ids.containsKey(key)) ids.put(key, id);
         }
-        Config.blocks = cleaned;
+        return ids;
+    }
+
+    private static Identifier find(Map<String, Identifier> ids, String name) {
+        if (name == null) return null;
+        return ids.get(squash(name.substring(name.indexOf(':') + 1)));
+    }
+
+    private static String squash(String name) {
+        return name.toLowerCase(Locale.ROOT).replace(" ", "").replace("_", "");
     }
 }

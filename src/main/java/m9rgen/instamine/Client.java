@@ -7,124 +7,85 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.api.Requirement;
 import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
-import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class Client implements ModMenuApi {
-    
+
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> {
             ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(net.minecraft.network.chat.Component.literal("Instamine Config"));
+                .setTitle(Component.literal("Instamine Config"))
+                .setSavingRunnable(Client::save);
 
-            ConfigCategory category = builder.getOrCreateCategory(
-                net.minecraft.network.chat.Component.literal("Blocks")
-            );
-
+            ConfigCategory category = builder.getOrCreateCategory(Component.literal("General"));
             ConfigEntryBuilder entry = builder.entryBuilder();
-            BooleanListEntry enabled = entry.startBooleanToggle(
-                net.minecraft.network.chat.Component.literal("Enabled"),
-                Config.enabled
-            )
-            .setDefaultValue(true)
-            .setSaveConsumer(value -> {
-                Config.enabled = value;
-                save(Config.blocks);
-            })
-            .build();
 
+            BooleanListEntry enabled = entry.startBooleanToggle(Component.literal("Enabled"), Config.enabled)
+                .setDefaultValue(Config.DEFAULT.enabled)
+                .setSaveConsumer(value -> Config.enabled = value)
+                .build();
+
+            // Everything except the master switch is greyed out while it's off.
             Requirement requirement = Requirement.isTrue(enabled);
-
             category.addEntry(enabled);
 
             category.addEntry(
-                entry.startFloatField(
-                    net.minecraft.network.chat.Component.literal("Hardness"),
-                    Config.hardness
-                )
-                .setDefaultValue(1.5f)
-                .setMin(0.1f)
-                .setRequirement(requirement)
-                .setSaveConsumer(value -> {
-                    Config.hardness = value;
-                    save(Config.blocks);
-                })
-                .build()
+                entry.startFloatField(Component.literal("Hardness"), Config.hardness)
+                    .setDefaultValue(Config.DEFAULT.hardness)
+                    .setMin(0.1f)
+                    .setRequirement(requirement)
+                    .setSaveConsumer(value -> Config.hardness = value)
+                    .build()
             );
 
             category.addEntry(
-                entry.startStrList(
-                    net.minecraft.network.chat.Component.literal("Blocks"),
-                    new ArrayList<>(Config.blocks)
-                )
-                .setDefaultValue(new ArrayList<>(Config.DEFAULT_BLOCKS))
-                .setInsertInFront(true)
-                .setExpanded(true)
-                .setRequirement(requirement)
-                .setSaveConsumer(Client::save)
-                .build()
+                entry.startStrList(Component.literal("Blocks"), new ArrayList<>(Config.blocks))
+                    .setDefaultValue(new ArrayList<>(Config.DEFAULT.blocks))
+                    .setInsertInFront(true)
+                    .setExpanded(true)
+                    .setRequirement(requirement)
+                    .setSaveConsumer(value -> Config.blocks = value)
+                    .build()
             );
 
-            category.addEntry(
-                entry.startBooleanToggle(
-                    net.minecraft.network.chat.Component.literal("Ores"),
-                    Config.ores
-                )
-                .setDefaultValue(true)
-                .setRequirement(requirement)
-                .setSaveConsumer(value -> {
-                    Config.ores = value;
-                    save(Config.blocks);
-                })
-                .build()
-            );
+            category.addEntry(toggle(entry, "Ores", Config.ores, Config.DEFAULT.ores, requirement, value -> Config.ores = value));
+            category.addEntry(toggle(entry, "Logs", Config.logs, Config.DEFAULT.logs, requirement, value -> Config.logs = value));
+            category.addEntry(toggle(entry, "Planks", Config.planks, Config.DEFAULT.planks, requirement, value -> Config.planks = value));
 
-            category.addEntry(
-                entry.startBooleanToggle(
-                    net.minecraft.network.chat.Component.literal("Logs"),
-                    Config.logs
-                )
-                .setDefaultValue(false)
-                .setRequirement(requirement)
-                .setSaveConsumer(value -> {
-                    Config.logs = value;
-                    save(Config.blocks);
-                })
-                .build()
-            );
-
-            category.addEntry(
-                entry.startBooleanToggle(
-                    net.minecraft.network.chat.Component.literal("Planks"),
-                    Config.planks
-                )
-                .setDefaultValue(false)
-                .setRequirement(requirement)
-                .setSaveConsumer(value -> {
-                    Config.planks = value;
-                    save(Config.blocks);
-                })
-                .build()
-            );
             category.addEntry(
                 entry.startTextDescription(
-                    net.minecraft.network.chat.Component.literal("Thanks for using Instamine :)")
-                    .withStyle(style -> style.withColor(0xFFFF00))
-                )
-                .build()
+                    Component.literal("Thanks for using Instamine :)")
+                        .withStyle(style -> style.withColor(0xFFFF00))
+                ).build()
             );
 
             return builder.build();
         };
     }
 
-    private static void save(List<String> blocks) {
-        if (Config.save(FabricLoader.getInstance().getConfigDir(), blocks)) {
-            Instamine.applyConfig();
-        }
+    private static BooleanListEntry toggle(
+        ConfigEntryBuilder entry,
+        String name,
+        boolean value,
+        boolean fallback,
+        Requirement requirement,
+        Consumer<Boolean> setter
+    ) {
+        return entry.startBooleanToggle(Component.literal(name), value)
+            .setDefaultValue(fallback)
+            .setRequirement(requirement)
+            .setSaveConsumer(setter)
+            .build();
+    }
+
+    private static void save() {
+        Config.blocks = Instamine.clean(Config.blocks);
+        Config.save();
+        Instamine.apply();
     }
 }

@@ -19,7 +19,7 @@ Versions below are for the latest release:
 | Dependency | Version | Required |
 |---|---|:---:|
 | Minecraft | 26.3 | Yes |
-| [Fabric Loader](https://fabricmc.net/use/installer/) | 0.15.5 + | Yes |
+| [Fabric Loader](https://fabricmc.net/use/installer/) | 0.19.5 + | Yes |
 | [Cloth Config API](https://modrinth.com/mod/cloth-config/versions) | 26.3.158 + | Yes |
 | [Mod Menu](https://modrinth.com/mod/modmenu/versions) | 21.0.0-beta.1 + | No |
 
